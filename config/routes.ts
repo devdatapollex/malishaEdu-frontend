@@ -32,7 +32,13 @@ export const ROUTES = {
  * List of public routes that do not require authentication.
  * Used by Middleware to allow access.
  */
-export const PUBLIC_ROUTES = [ROUTES.HOME, ROUTES.LOGIN, ROUTES.REGISTER, ROUTES.UNAUTHORIZED];
+export const PUBLIC_ROUTES = [
+  ROUTES.HOME,
+  ROUTES.LOGIN,
+  ROUTES.REGISTER,
+  ROUTES.UNAUTHORIZED,
+  ROUTES.DASHBOARD, // Whitelisted for starter template development
+];
 
 /**
  * Default redirect path after successful login.
