@@ -7,10 +7,21 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  SECURE_LOGIN: '/secure-login',
   UNAUTHORIZED: '/unauthorized',
 
   // Protected Routes
   DASHBOARD: '/dashboard',
+  // Students Routes
+  STUDENTS: {
+    LIST: '/dashboard/students',
+    CREATE: '/dashboard/students/create',
+  },
+  // Branches Routes
+  BRANCHES: {
+    LIST: '/dashboard/branches',
+    CREATE: '/dashboard/branches/create',
+  },
   PROFILE: '/dashboard/profile',
   SETTINGS: '/dashboard/settings',
 
@@ -36,6 +47,7 @@ export const PUBLIC_ROUTES = [
   ROUTES.HOME,
   ROUTES.LOGIN,
   ROUTES.REGISTER,
+  ROUTES.SECURE_LOGIN,
   ROUTES.UNAUTHORIZED,
   ROUTES.DASHBOARD, // Whitelisted for starter template development
 ];

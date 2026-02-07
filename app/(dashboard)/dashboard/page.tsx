@@ -3,8 +3,10 @@
 import { Users, GraduationCap, FileText, TrendingUp, BookOpen, ArrowUpRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState, useEffect } from 'react';
+import { useAuthStore } from '@/store/auth.store';
 
 export default function DashboardPage() {
+  const { user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -55,10 +57,11 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <div className="relative overflow-hidden rounded-2xl bg-primary px-8 py-10 text-primary-foreground shadow-lg">
         <div className="relative z-10">
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back, Admin</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Welcome back, {user?.name?.split(' ')[0] || 'User'}
+          </h1>
           <p className="mt-2 text-primary-foreground/80 max-w-xl">
-            Here&apos;s what&apos;s happening with your education management system today. You have
-            12 new applications pending review.
+            Here&apos;s what&apos;s happening with your education management system today.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <button className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-primary shadow-sm hover:bg-white/90 transition-colors">

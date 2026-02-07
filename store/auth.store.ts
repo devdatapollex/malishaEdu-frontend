@@ -4,7 +4,13 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 /**
  * User roles for the platform
  */
-export type UserRole = 'student' | 'agent' | 'admin' | 'guest';
+export type UserRole =
+  | 'SUPER_ADMIN'
+  | 'ADMIN'
+  | 'BRANCH'
+  | 'BRANCH_MANAGER'
+  | 'COUNSELOR'
+  | 'STUDENT';
 
 interface User {
   id: string;
@@ -59,7 +65,7 @@ export const useAuthStore = create<AuthState>()(
 
       hasPermission: (permission) => {
         const state = get();
-        if (state.user?.role === 'admin') return true; // Admins have all permissions
+        if (state.user?.role === 'ADMIN' || state.user?.role === 'SUPER_ADMIN') return true;
         return state.user?.permissions.includes(permission) || false;
       },
     }),

@@ -1,6 +1,9 @@
 'use client';
 
-import { Menu, Bell, Search, User } from 'lucide-react';
+import { Menu, Bell, Search, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,12 +13,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuthStore } from '@/store/auth.store';
+import { ROUTES } from '@/config/routes';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 export function DashboardHeader({ onMenuClick }: HeaderProps) {
+  const { user, logout } = useAuthStore();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    const isStudent = user?.role === 'STUDENT';
+    logout();
+    router.push(isStudent ? ROUTES.LOGIN : ROUTES.SECURE_LOGIN);
+  };
+
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-background/95 px-4 backdrop-blur sm:px-8">
       <div className="flex items-center gap-4">
@@ -44,17 +58,54 @@ export function DashboardHeader({ onMenuClick }: HeaderProps) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full bg-muted">
-              <User className="h-5 w-5" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 rounded-full bg-muted flex items-center justify-center overflow-hidden border border-primary/10"
+            >
+              {user?.image ? (
+                <Image
+                  src={user.image}
+                  alt={user.name || 'User'}
+                  width={36}
+                  height={36}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="text-xs font-bold text-primary uppercase">
+                  {user?.name?.charAt(0) || 'U'}
+                </div>
+              )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">{user?.name || 'User'}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email || 'user@example.com'}
+                </p>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={ROUTES.PROFILE} className="cursor-pointer">
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={ROUTES.SETTINGS} className="cursor-pointer">
+                Settings
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Log out</DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-destructive cursor-pointer focus:bg-destructive focus:text-destructive-foreground"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

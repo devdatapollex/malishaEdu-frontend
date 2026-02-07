@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
-import { Sidebar } from '@/components/dashboard/sidebar-new';
+import { Sidebar } from '@/components/dashboard/sidebar';
 import { DashboardHeader } from '@/components/dashboard/header';
 
 /**
@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-primary/[0.02]">
+    <div className="flex h-screen overflow-hidden bg-primary/2">
       {/* Dynamic Sidebar handles permissions automatically and is responsive */}
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 

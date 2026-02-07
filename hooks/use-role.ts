@@ -8,13 +8,14 @@ export const useRole = () => {
 
   return {
     role: user?.role,
-    isAdmin: user?.role === 'admin',
-    isAgent: user?.role === 'agent',
-    isStudent: user?.role === 'student',
+    isAdmin: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
+    isBranch: user?.role === 'BRANCH',
+    isCounselor: user?.role === 'COUNSELOR',
+    isStudent: user?.role === 'STUDENT',
     user,
     permissions: user?.permissions || [],
     hasPermission: (p: string) => {
-      if (user?.role === 'admin') return true;
+      if (user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN') return true;
       return user?.permissions.includes(p) || false;
     },
     checkAccess: (allowedRoles: string[]) => allowedRoles.includes(user?.role || ''),

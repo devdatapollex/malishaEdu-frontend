@@ -4,10 +4,21 @@ import {
   GraduationCap,
   Settings,
   FileText,
-  UserCheck,
   Building2,
   BookOpen,
-  PieChart,
+  MessageSquareQuote,
+  Newspaper,
+  Calendar,
+  HelpCircle,
+  Globe,
+  Mail,
+  Heart,
+  Files,
+  NotebookPen,
+  ClipboardList,
+  User,
+  UsersRound,
+  LayoutList,
 } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 
@@ -17,61 +28,153 @@ export interface MenuItem {
   icon: LucideIcon;
   roles?: string[];
   permission?: string;
+  children?: MenuItem[];
 }
 
 export const DASHBOARD_MENU_ITEMS: MenuItem[] = [
+  // --- Global / Common ---
   {
-    label: 'Dashboard',
+    label: 'Home',
     href: '/dashboard',
     icon: LayoutDashboard,
-    roles: ['admin', 'branch', 'counselor', 'staff', 'agent', 'student'],
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR', 'STUDENT'],
   },
+
+  // --- Student Specific ---
+  {
+    label: 'Wishlist',
+    href: '/dashboard/wishlist',
+    icon: Heart,
+    roles: ['STUDENT'],
+  },
+  {
+    label: 'Documents',
+    href: '/dashboard/documents',
+    icon: Files,
+    roles: ['STUDENT'],
+  },
+  {
+    label: 'Notes',
+    href: '/dashboard/notes',
+    icon: NotebookPen,
+    roles: ['STUDENT'],
+  },
+  {
+    label: 'Tasks',
+    href: '/dashboard/tasks',
+    icon: ClipboardList,
+    roles: ['STUDENT'],
+  },
+
+  // --- Shared Management (Admin, Branch & Counselor) ---
   {
     label: 'Universities',
     href: '/dashboard/universities',
     icon: GraduationCap,
-    roles: ['admin'],
+    roles: ['SUPER_ADMIN', 'ADMIN'],
   },
   {
-    label: 'Branch Management',
-    href: '/dashboard/branches',
-    icon: Building2,
-    roles: ['admin'],
-  },
-  {
-    label: 'Course Catalog',
+    label: 'Course',
     href: '/dashboard/courses',
     icon: BookOpen,
-    roles: ['admin', 'branch'],
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR'],
   },
   {
-    label: 'Leads Management',
-    href: '/dashboard/leads',
+    label: 'Students',
+    href: '/dashboard/students',
+    icon: Users,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR'],
+  },
+  {
+    label: 'Applications',
+    href: '/dashboard/applications',
     icon: FileText,
-    permission: 'lead:manage',
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR', 'STUDENT'],
   },
   {
-    label: 'Counselors',
-    href: '/dashboard/counselors',
-    icon: UserCheck,
-    roles: ['admin', 'branch'],
+    label: 'Lead Pipeline',
+    href: '/dashboard/leads',
+    icon: LayoutList,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR'],
   },
   {
-    label: 'Users Control',
+    label: 'Consultants',
+    href: '/dashboard/consultants',
+    icon: UsersRound,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR'],
+  },
+  {
+    label: 'Academic Settings',
+    href: '/dashboard/academic-settings',
+    icon: GraduationCap,
+    roles: ['SUPER_ADMIN', 'ADMIN'],
+    children: [
+      { label: 'Classes', href: '/dashboard/academic-settings/classes', icon: Calendar },
+      { label: 'Sessions', href: '/dashboard/academic-settings/sessions', icon: LayoutDashboard },
+      { label: 'Subjects', href: '/dashboard/academic-settings/subjects', icon: BookOpen },
+    ],
+  },
+  {
+    label: 'Our Branches',
+    href: '/dashboard/branches',
+    icon: Building2,
+    roles: ['SUPER_ADMIN', 'ADMIN'],
+  },
+
+  // --- Content & Support ---
+  {
+    label: 'Testimonial',
+    href: '/dashboard/testimonials',
+    icon: MessageSquareQuote,
+    roles: ['SUPER_ADMIN', 'ADMIN'],
+  },
+  {
+    label: 'Blog & Events',
+    href: '/dashboard/blog-events',
+    icon: Newspaper,
+    roles: ['SUPER_ADMIN', 'ADMIN'],
+  },
+  {
+    label: 'Support',
+    href: '/dashboard/support',
+    icon: HelpCircle,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR', 'STUDENT'],
+    children: [
+      { label: 'Tickets', href: '/dashboard/support/tickets', icon: FileText },
+      { label: 'FAQ', href: '/dashboard/support/faq', icon: HelpCircle },
+      { label: 'Contact Us', href: '/dashboard/support/contact', icon: Mail },
+    ],
+  },
+  {
+    label: 'Users Management',
     href: '/dashboard/users',
     icon: Users,
-    roles: ['admin'],
+    permission: 'user:manage',
   },
   {
-    label: 'Reports',
-    href: '/dashboard/reports',
-    icon: PieChart,
-    roles: ['admin'],
+    label: 'Web Management',
+    href: '/dashboard/web-management',
+    icon: Globe,
+    roles: ['SUPER_ADMIN', 'ADMIN'],
+  },
+  {
+    label: 'Mailbox',
+    href: '/dashboard/mailbox',
+    icon: Mail,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR'],
+  },
+
+  // --- Common Footer Items ---
+  {
+    label: 'Profile',
+    href: '/dashboard/profile',
+    icon: User,
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR', 'STUDENT'],
   },
   {
     label: 'Settings',
     href: '/dashboard/settings',
     icon: Settings,
-    roles: ['admin', 'branch', 'counselor', 'staff', 'agent', 'student'],
+    roles: ['SUPER_ADMIN', 'ADMIN', 'BRANCH', 'COUNSELOR', 'STUDENT'],
   },
 ];
