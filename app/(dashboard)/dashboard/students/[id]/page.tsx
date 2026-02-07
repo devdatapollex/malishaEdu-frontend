@@ -77,9 +77,10 @@ function LoadingState() {
   );
 }
 
-function ErrorState({ error }: { error: Error }) {
+function ErrorState({ error }: { error: Error | null }) {
+  const apiError = error as { response?: { data?: { message?: string } } } | null;
   const message =
-    error?.response?.data?.message || "We couldn't find the student record you're looking for.";
+    apiError?.response?.data?.message || "We couldn't find the student record you're looking for.";
 
   return (
     <div className="flex flex-col items-center justify-center text-center p-6">

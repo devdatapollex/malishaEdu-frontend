@@ -7,8 +7,16 @@ interface PreferenceInfoProps {
   student: Student;
 }
 
+type Preference = {
+  countries?: string;
+  intakeYear?: string;
+  session?: string;
+  subject?: string;
+  budget?: string;
+};
+
 export function PreferenceInfo({ student }: PreferenceInfoProps) {
-  const preferences = student.preferences?.[0] || {};
+  const preferences: Preference = student.preferences?.[0] || {};
 
   return (
     <div className="space-y-6">
